@@ -1,0 +1,73 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:JiangDongXiaoQiaoTools"
+        xmlns:Properties="clr-namespace:JiangDongXiaoQiaoTools.Properties" x:Class="JiangDongXiaoQiaoTools.MainWindow"
+        mc:Ignorable="d"
+        Title="让江东小乔更好用助手 V1 www.djc8.cn" Height="500" MinHeight="500" MaxHeight="500" Width="528"  MinWidth="528" MaxWidth="528" >
+    <Grid RenderTransformOrigin="0.507,0.486">
+        <StackPanel>
+            <Grid Width="Auto" Height="Auto" Margin="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="作用：可以提取取小乔里面的【矿号】，通过配置，可以由你控制用户库包含哪些用户。" VerticalAlignment="Top" />
+                </Grid>
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions >
+                        <ColumnDefinition Width="154"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <Button x:Name="btnSelectXQPath" Content="选择小乔文件夹的路径"  Width="154" HorizontalAlignment="Left" Click="btnSelectXQPath_Click"/>
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <Label x:Name="lblXQPath" Content="" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+                    </Grid>
+                </Grid>
+            </Grid>
+            <GroupBox x:Name="gbMain" Header="" HorizontalAlignment="Left" Height="413" Margin="1,1,0,0" VerticalAlignment="Top" Width="509">
+                <Grid Width="Auto" Height="Auto" Margin="0,-7,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25" />
+                        <RowDefinition Height="*" />
+
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Label Content="主公：" Grid.Column="0" HorizontalAlignment="Right"/>
+                        <ComboBox x:Name="cbxUser"  Grid.Column="1" Height="20"  />
+                        <CheckBox Content="30-40级"  Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <CheckBox Content="41-50级"  Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <CheckBox Content="51-60级" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <CheckBox Content="60以上" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <ListBox Height="363" Width="239" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <CheckBox Content="12级 ： id: "/>
+                        </ListBox>
+                    </Grid>
+                </Grid>
+
+            </GroupBox>
+
+
+
+        </StackPanel>
+
+
+
+    </Grid>
+</Window>
