@@ -7,8 +7,8 @@ using System.Windows;
 // 有关程序集的一般信息由以下
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("JiangDongXiaoQiaoTools")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("江东小乔更好用工具")]
+[assembly: AssemblyDescription("让江东小乔更好用")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("JiangDongXiaoQiaoTools")]

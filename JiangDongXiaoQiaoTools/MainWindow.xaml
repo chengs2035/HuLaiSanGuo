@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="让江东小乔更好用助手 V1 www.djc8.cn" Height="520" MinHeight="520"  Width="600.667"  MinWidth="528"  >
     <Grid RenderTransformOrigin="0.5,0.5">
-        <StackPanel>
+        <StackPanel Panel.ZIndex="1">
             <Grid Width="Auto" Height="Auto" Margin="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="25"/>
@@ -63,7 +63,7 @@
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
-                        <TextBlock HorizontalAlignment="Left" Margin="262,76,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="306" Width="298" Foreground="Black" FontSize="16"><Run Text="作用：可以提取取小乔里面的【矿号】，通过配置，可以由你控制用户库包含哪些用户。"/><LineBreak/><Run Text="1.【选择小乔文件夹的路径】，选中小乔的目录。"/><LineBreak/><Run Text="2.之后会自动解锁主公的下拉框"/><LineBreak/><Run Text="3.选择主公后，就会加载出矿号了。"/><LineBreak/><Run Text="4.通过快速选择复选框，可以自动选中对应范围的矿号。目前支持的选项为：1-30，31-40，41-50，50以上。"/><LineBreak/><Run Text="5.左侧矿号列表也可以直接点击，选中取消等操作。"/><LineBreak/><Run Text="6.都每次操作结束后，点击保存按钮，就会自动保存。请选择一个主公，就保存一次！。"/></TextBlock>
+                        <TextBlock HorizontalAlignment="Left" Margin="262,76,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="306" Width="298" Foreground="Black" FontSize="14"><Run Text="作用：可以提取取小乔里面的【矿号】，通过配置，可以由你控制用户库包含哪些用户。"/><LineBreak/><Run Text="1.【选择小乔文件夹的路径】，选中小乔的目录。"/><LineBreak/><Run Text="2.之后会自动解锁主公的下拉框"/><LineBreak/><Run Text="3.选择主公后，就会加载出矿号了。"/><LineBreak/><Run Text="4.通过快速选择复选框，可以自动选中对应范围的矿号。目前支持的选项为：1-30，31-40，41-50，50以上。"/><LineBreak/><Run Text="5.左侧矿号列表也可以直接点击，选中取消等操作。"/><LineBreak/><Run Text="6.都每次操作结束后，点击保存按钮，就会自动保存。请选择一个主公，就保存一次！。"/><LineBreak/><Run Text="7.孙尚香最美，不接受反驳"/></TextBlock>
                         <Button x:Name="btnSave" Content="保存" HorizontalAlignment="Left" Height="59" Margin="260,12,0,0" VerticalAlignment="Top" Width="300" Click="btnSave_Click"/>
 
                     </Grid>
@@ -76,7 +76,10 @@
 
         </StackPanel>
 
-
+        <StackPanel Margin="0,0,0,0">
+            <Image Source="favicon128128.ico" Opacity="0.3" Panel.ZIndex="-1" />
+            
+        </StackPanel>
 
     </Grid>
 </Window>
