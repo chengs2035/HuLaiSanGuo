@@ -1,6 +1,10 @@
 # HuLaiSanGuo
 Game is EASY!
+###
+Recommend you to use Windows 10
 
+
+### RunTime Error
 
 If Windows 7 running prompt
 
@@ -14,4 +18,4 @@ If Windows 7,Windows 8 running prompt
 
 ![pic2](https://raw.githubusercontent.com/chengs2035/HuLaiSanGuo/master/Pic/2.png)
 
-PLZ，Click Yes , It will Auto Install..
+PLZ，Click Yes , The browser will open, you can click download to download
