@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:JiangDongXiaoQiaoTools"
         xmlns:Properties="clr-namespace:JiangDongXiaoQiaoTools.Properties" x:Class="JiangDongXiaoQiaoTools.MainWindow"
         mc:Ignorable="d"
-        Title="让江东小乔更好用助手 V1 www.djc8.cn" Height="500" MinHeight="500" MaxHeight="500" Width="528"  MinWidth="528" MaxWidth="528" >
-    <Grid RenderTransformOrigin="0.507,0.486">
+        Title="让江东小乔更好用助手 V1 www.djc8.cn" Height="520" MinHeight="520"  Width="600.667"  MinWidth="528"  >
+    <Grid RenderTransformOrigin="0.5,0.5">
         <StackPanel>
             <Grid Width="Auto" Height="Auto" Margin="1">
                 <Grid.RowDefinitions>
@@ -15,7 +15,7 @@
                     <RowDefinition Height="25"/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
-                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="作用：可以提取取小乔里面的【矿号】，通过配置，可以由你控制用户库包含哪些用户。" VerticalAlignment="Top" />
+                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="操作前先备份小乔的目录！程序会做一次自动备份的操作。" VerticalAlignment="Top" FontSize="16" Foreground="Red" />
                 </Grid>
 
                 <Grid Grid.Row="1">
@@ -31,7 +31,7 @@
                     </Grid>
                 </Grid>
             </Grid>
-            <GroupBox x:Name="gbMain" Header="" HorizontalAlignment="Left" Height="413" Margin="1,1,0,0" VerticalAlignment="Top" Width="509">
+            <GroupBox x:Name="gbMain" Header="" HorizontalAlignment="Left" Height="432"   Margin="1,1,0,1" VerticalAlignment="Top" Width="582" RenderTransformOrigin="0.5,0.5" >
                 <Grid Width="Auto" Height="Auto" Margin="0,-7,0,0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="25" />
@@ -40,25 +40,34 @@
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
+                            <ColumnDefinition Width="40"/>
+                            <ColumnDefinition Width="150"/>
                             <ColumnDefinition />
                             <ColumnDefinition />
                             <ColumnDefinition />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <Label Content="主公：" Grid.Column="0" HorizontalAlignment="Right"/>
-                        <ComboBox x:Name="cbxUser"  Grid.Column="1" Height="20"  />
-                        <CheckBox Content="30-40级"  Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        <CheckBox Content="41-50级"  Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        <CheckBox Content="51-60级" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <CheckBox Content="60以上" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <ComboBox x:Name="cbxUser"  Grid.Column="1" Height="20" Width="150"  SelectionChanged="cbxUser_SelectionChanged" />
+                        <CheckBox x:Name="cbx0130" Content="1-30级"  Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Tag="1"  Unchecked="CheckBox_Checked" Checked="CheckBox_Checked" IsChecked="True" />
+                        <CheckBox x:Name="cbx3140" Content="31-40级"  Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Tag="2"  Unchecked="CheckBox_Checked" Checked="CheckBox_Checked" IsChecked="True"   />
+                        <CheckBox x:Name="cbx4150" Content="41-50级" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" Tag="3"  Unchecked="CheckBox_Checked" Checked="CheckBox_Checked" IsChecked="True" />
+                        <CheckBox x:Name="cbx50plus" Content="50以上" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" Tag="4"  Unchecked="CheckBox_Checked" Checked="CheckBox_Checked" IsChecked="True" />
                     </Grid>
+
                     <Grid Grid.Row="1">
-                        <ListBox Height="363" Width="239" HorizontalAlignment="Left" VerticalAlignment="Top">
-                            <CheckBox Content="12级 ： id: "/>
+                        <ListBox x:Name="lbMineAccounts" Height="382" Width="239" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <CheckBox Margin="5"   Tag="{Binding u}" Content="{Binding ul}" IsChecked="{Binding IsSelected}"></CheckBox>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
                         </ListBox>
+                        <TextBlock HorizontalAlignment="Left" Margin="262,76,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="306" Width="298" Foreground="Black" FontSize="16"><Run Text="作用：可以提取取小乔里面的【矿号】，通过配置，可以由你控制用户库包含哪些用户。"/><LineBreak/><Run Text="1.【选择小乔文件夹的路径】，选中小乔的目录。"/><LineBreak/><Run Text="2.之后会自动解锁主公的下拉框"/><LineBreak/><Run Text="3.选择主公后，就会加载出矿号了。"/><LineBreak/><Run Text="4.通过快速选择复选框，可以自动选中对应范围的矿号。目前支持的选项为：1-30，31-40，41-50，50以上。"/><LineBreak/><Run Text="5.左侧矿号列表也可以直接点击，选中取消等操作。"/><LineBreak/><Run Text="6.都每次操作结束后，点击保存按钮，就会自动保存。请选择一个主公，就保存一次！。"/></TextBlock>
+                        <Button x:Name="btnSave" Content="保存" HorizontalAlignment="Left" Height="59" Margin="260,12,0,0" VerticalAlignment="Top" Width="300" Click="btnSave_Click"/>
+
                     </Grid>
+
                 </Grid>
 
             </GroupBox>

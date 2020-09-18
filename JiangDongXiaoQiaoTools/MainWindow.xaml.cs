@@ -1,6 +1,8 @@
 ﻿using JiangDongXiaoQiaoTools.Bean;
+using JiangDongXiaoQiaoTools.DBHelp;
 using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -32,14 +34,11 @@ namespace JiangDongXiaoQiaoTools
             InitializeComponent();
             //全局配置
             gbMain.IsEnabled = false;
-
-           
-
-
+            opDB = new OperDB();
         }
         private string xqDb = "";
 
-        System.Data.SQLite.SQLiteConnection sqlite = null;
+        private OperDB opDB = null;
 
         private void btnSelectXQPath_Click(object sender, RoutedEventArgs e)
         {
@@ -75,73 +74,28 @@ namespace JiangDongXiaoQiaoTools
                  gbMain.IsEnabled = true;
                 //加载用户数据，并且默认选择一个
                 loadUser(xqPath);
-            }
-        }
-        /**
-         * 连接数据库
-         * 
-         */
-        private void connDB(string dbpath) {
 
-            sqlite = new System.Data.SQLite.SQLiteConnection(string.Format("Data Source={0};UTF8Encoding=True;Version=3",dbpath));
-            try
-            {
-                sqlite.Open();
-            }
-            catch (System.Data.SQLite.SQLiteException ex)
-            {
-                throw new System.Data.SQLite.SQLiteException("数据库连接异常：请关闭小乔后重试！异常具体信息："+ex.Message);
-            }
-            finally {
-                //conn success.
-                sqlite.Close();
             }
         }
+
+        /// <summary>
+        /// 获取用户信息下拉框
+        /// </summary>
         private void getUserInfo() {
             //将获取到的数据，加载到下拉框中
-            DataTable dt = new DataTable();
-            SQLiteCommand sqliteCmd=sqlite.CreateCommand();
-            sqliteCmd.CommandText = "select key,value from ItemTable";
-
             try
             {
-                sqlite.Open();
-                // SQLiteDataReader dataReader = sqliteCmd.ExecuteReader();
-
-                List<ItemTable> list = new List<ItemTable>();
-
-                using (SQLiteDataReader dr = sqliteCmd.ExecuteReader(CommandBehavior.CloseConnection))
-                {
-
-                    while (dr.Read())
-                    {
-                        ItemTable tb = new ItemTable();
-                        string key = dr["key"].ToString();
-                        tb.key = key;
-                        byte[] bs = dr["value"] as Byte[];
-                        tb.valueJson=System.Text.Encoding.GetEncoding("UNICODE").GetString(bs);
-                        list.Add(tb);
-                    }
-                }
-                for (int i = 0, l= list.Count; i < l; i++){
-                    ItemTable table = list[i];
-                    if (table.key != null && table.key.Contains("zUsers")) {
-                        //zUsers用户表
-                        //转换
-                        
-                    }
-                }
-
+                List<ItemTable> list = opDB.getDBItemTable();
+                string zUsersStr = opDB.getDBItemValue("zUsers");
+                List<TUser> tusers = JsonConvert.DeserializeObject<List<TUser>>(zUsersStr);
+                cbxUser.ItemsSource = tusers;
+                cbxUser.DisplayMemberPath = "UserName";//显示出来的值
+                cbxUser.SelectedValuePath = "roleId";//实际选中后获取的结果的值
+                cbxUser.SelectedIndex = 1;
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-            }
-            finally {
-                if (sqlite != null) {
-                    sqliteCmd.Dispose();
-                    sqlite.Close();
-                }
             }
         }
         /**
@@ -149,16 +103,173 @@ namespace JiangDongXiaoQiaoTools
          * 
          */
         private bool loadUser(string xqPath) {
-            //
-            string xqDbPath=xqPath +"\\cache\\Local Storage\\http_127.0.0.1_20126.localstorage";
-            if (!File.Exists(xqDbPath)) {
+            //猜测的数据库
+            string guestFileName = "";
+            
+            string[] files=Directory.GetFiles(string.Format("{0}\\cache\\Local Storage\\",xqPath));
+            if (files == null || files.Length == 0)
+            {
+                throw new Exception("小乔路径下找不到对应的数据库，请确定已经使用过小乔，并且更新了矿号！");
+            }
+            else {
+                for (int i = 0; i < files.Length; i++) {
+                    guestFileName = files[i];
+                    if (guestFileName.EndsWith("localstorage")) {
+                        break;
+                    }
+                }
+            }
+           // string xqDbPath = xqPath + "\\cache\\Local Storage\\"+ guestFileName;
+
+            if (!File.Exists(guestFileName)) {
                 throw new Exception("小乔路径下找不到对应的数据库，请确定已经使用过小乔，并且更新了矿号！");
             }
             //1.尝试连接数据库。
-            connDB(xqDbPath);
+            opDB.connDB(guestFileName);
+            //执行数据备份操作
+            
+            File.Copy(guestFileName, string.Format("{0}.{1}.{2}",guestFileName ,System.DateTime.UtcNow.Ticks,"bak"));
+
             //数据库连接没问题，重新打开一次，并且读取用户数据
             getUserInfo();
+            
             return true;
+        }
+
+
+        /// <summary>
+        /// 当用户被改变的时候，需要加载对应用户下的矿号
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cbxUser_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            bool flag = false;
+            if (cbxUser.SelectedItem == null) {
+                //没有选择的时候，禁用保存按钮，禁用级别范围选择
+                btnSave.IsEnabled = flag;
+                cbx0130.IsEnabled = flag;
+                cbx3140.IsEnabled = flag;
+                cbx4150.IsEnabled = flag;
+                cbx50plus.IsEnabled = flag;
+                lbMineAccounts.ItemsSource = null;
+
+                lbMineAccounts.Items.Clear();
+                return;
+            }
+
+            //lbMineAccounts
+            //1.读取用户角色id。
+            TUser tuser = (TUser)cbxUser.SelectedItem;
+            
+            //2.根据角色id获取矿号
+            string queryStr = string.Format("SubUser_{0}_{1}", tuser.platform, tuser.roleId);
+            string subUserJson = opDB.getDBItemValue(queryStr);
+            
+            //3.将列表清空，并且加载矿号进入。
+            List<SubUser> subUsers = JsonConvert.DeserializeObject<List<SubUser>>(subUserJson);
+            
+            if (subUsers != null && subUsers.Count > 0)
+            {
+                flag = true;
+            }
+            else {
+                flag = false;
+            }
+
+            btnSave.IsEnabled = flag;
+            cbx0130.IsEnabled = flag;
+            cbx3140.IsEnabled = flag;
+            cbx4150.IsEnabled = flag;
+            cbx50plus.IsEnabled = flag;
+
+            lbMineAccounts.ItemsSource = null;
+
+            lbMineAccounts.Items.Clear();
+            
+            lbMineAccounts.ItemsSource = subUsers;
+
+        }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (lbMineAccounts==null || lbMineAccounts.Items == null || lbMineAccounts.Items.Count == 0) return;
+            CheckBox cbx = (CheckBox)sender;
+            string tag = cbx.Tag.ToString();
+            //CheckBox checkbox = (CheckBox)control;
+            
+            var query = from SubUser item in lbMineAccounts.Items
+                        select item;
+             
+            if ("1".Equals(tag))
+            {   
+                //1-30级
+                query = from SubUser item in lbMineAccounts.Items
+                        where item.l > 1 && item.l < 31
+                        select item;
+            }
+            else if ("2".Equals(tag)) {
+                //31-40
+                //1-30级
+                query = from SubUser item in lbMineAccounts.Items
+                        where item.l > 30 && item.l < 41
+                        select item;
+            }
+            else if ("3".Equals(tag))
+            {
+                //41-50
+                query = from SubUser item in lbMineAccounts.Items
+                        where item.l > 40 && item.l < 51
+                        select item;
+            }
+            else if ("4".Equals(tag))
+            {
+                //50以上
+                query = from SubUser item in lbMineAccounts.Items
+                        where item.l > 50
+                        select item;
+            }
+            foreach (var item in query)
+            {
+                SubUser user = (SubUser)item;
+
+                user.IsSelected = cbx.IsChecked.Value;
+            }
+            lbMineAccounts.Items.Refresh();
+
+
+        }
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("请确认是否保存", "警告", MessageBoxButton.YesNo) == MessageBoxResult.Yes) {
+                var query = from SubUser item in lbMineAccounts.Items
+                            where item.l > 1 && item.l < 31 && item.IsSelected == true
+                            select new
+                            {
+                                u = item.u,
+                                l = item.l
+                            };
+                string jsonSubUser = JsonConvert.SerializeObject(query);
+
+                //1.读取用户角色id。
+                TUser tuser = (TUser)cbxUser.SelectedItem;
+
+                //2.根据角色id获取矿号
+                string queryStr = string.Format("SubUser_{0}_{1}", tuser.platform, tuser.roleId);
+                try
+                {
+                    if (opDB.updateItemTable(queryStr, jsonSubUser) > 0)
+                    {
+                        MessageBox.Show("保存成功拉，可以打开小乔看看了");
+                        getUserInfo();
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
         }
     }
 }
