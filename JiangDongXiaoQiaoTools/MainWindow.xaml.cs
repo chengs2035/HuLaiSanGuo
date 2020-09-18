@@ -345,5 +345,49 @@ namespace JiangDongXiaoQiaoTools
 
 
         }
+
+        private void btnHandAdd_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtHandAddSubAccount.Text))
+            {
+                MessageBox.Show("必须输入要添加的id跟等级，比如123567:120");
+                return;
+            }
+
+            List<SubUser> subUsers = new List<SubUser>();
+            SubUser subUser = new SubUser();
+
+            string[] accsplit = txtHandAddSubAccount.Text.Split(':');
+            if (accsplit == null || accsplit.Length < 2) {
+                MessageBox.Show("等级跟id输入的不对请重新输入，中间的冒号必须是英文的冒号，不能用中文");
+                return;
+            }
+            int testInt = 0;
+            if (!int.TryParse(accsplit[0], out testInt)) {
+                MessageBox.Show("ID必须为数字!");
+                return;
+            }
+            if(!int.TryParse(accsplit[1],out testInt)){
+                MessageBox.Show("等级必须为数字!");
+                return;
+            }
+            subUser.u = accsplit[0];
+            subUser.l = int.Parse( accsplit[1]);
+
+            if (lbMineAccounts.Items == null || lbMineAccounts.Items.Count == 0)
+            {
+                subUsers.Add(subUser);
+            }
+            else {
+                var query = from SubUser item in lbMineAccounts.Items
+                            select item;
+                subUsers = query.ToList();
+                subUsers.Add(subUser);
+            }
+            lbMineAccounts.ItemsSource = null;
+            lbMineAccounts.Items.Clear();
+            lbMineAccounts.ItemsSource = subUsers;
+            lbMineAccounts.Items.Refresh();
+        }
     }
 }

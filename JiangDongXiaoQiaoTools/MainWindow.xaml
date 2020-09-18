@@ -63,12 +63,14 @@
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
-                        <TextBlock HorizontalAlignment="Left" Margin="262,76,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="286" Width="298" Foreground="Black" FontSize="14"><Run Text="作用：可以提取取小乔里面的【矿号】，通过配置，可以由你控制用户库包含哪些用户。"/><LineBreak/><Run Text="1.【选择小乔文件夹的路径】，选中小乔的目录。"/><LineBreak/><Run Text="2.之后会自动解锁主公的下拉框"/><LineBreak/><Run Text="3.选择主公后，就会加载出矿号了。"/><LineBreak/><Run Text="4.通过快速选择复选框，可以自动选中对应范围的矿号。目前支持的选项为：1-30，31-40，41-50，50以上。"/><LineBreak/><Run Text="5.左侧矿号列表也可以直接点击，选中取消等操作。"/><LineBreak/><Run Text="6.都每次操作结束后，点击保存按钮，就会自动保存。请选择一个主公，就保存一次！。"/><LineBreak/><Run Text="7.孙尚香最美，不接受反驳"/><LineBreak/><Run Text="8.黑科技不稳定，不要用哦"/></TextBlock>
-                        <Button x:Name="btnSave" Content="保存" HorizontalAlignment="Left" Height="59" Margin="260,12,0,0" VerticalAlignment="Top" Width="300" Click="btnSave_Click"/>
-                        <Button Content="黑科技" HorizontalAlignment="Left" Margin="262,367,0,0" VerticalAlignment="Top" Width="92" Height="27" Click="Button_Click"/>
-                        <TextBox x:Name="txtAuthCode" Margin="359,368,10,50" Height="27"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="260,117,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="286" Width="298" Foreground="Black"><Run Text="作用：可以提取取小乔里面的【矿号】，通过配置，可以由你控制用户库包含哪些用户。"/><LineBreak/><Run Text="1.【选择小乔文件夹的路径】，选中小乔的目录。"/><LineBreak/><Run Text="2.之后会自动解锁主公的下拉框"/><LineBreak/><Run Text="3.选择主公后，就会加载出矿号了。"/><LineBreak/><Run Text="4.通过选择"/><Run Text="快速"/><Run Text="复选框"/><Run Text="（等级筛选）"/><Run Text="，可以自动选中"/><Run Text="或取消"/><Run Text="对应"/><Run Text="等级"/><Run Text="范围的矿号。目前支持的选项为：1-30，31-40，41-50，50以上。"/><LineBreak/><Run Text="5.左侧矿号列表也可以直接点击，选中取消等操作。"/><LineBreak/><Run Text="6."/><Run Text="每个主公的矿号都需要分别保存。"/><LineBreak/><Run Text="7.支持搜索矿号"/><LineBreak/><Run Text="8.支持手工添加，格式：ID:等级，比如：123567:14"/><LineBreak/><Run Text="9"/><Run Text=".孙尚香最美，不接受反驳"/><LineBreak/><Run Text="10"/><Run Text=".黑科技不稳定，不要用哦"/></TextBlock>
+                        <Button x:Name="btnSave" HorizontalAlignment="Left" Height="59" Margin="260,53,0,0" VerticalAlignment="Top" Width="300" Click="btnSave_Click" Content="保存"/>
+                        <Button Content="黑科技" HorizontalAlignment="Left" Margin="260,408,0,0" VerticalAlignment="Top" Width="92" Height="27" Click="Button_Click"/>
+                        <TextBox x:Name="txtAuthCode" Margin="369,408,0,10" Height="27"/>
                         <TextBox x:Name="txtSearch" HorizontalAlignment="Left" Height="20" Margin="8,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="151"/>
                         <Button x:Name="btnQueryNext" Content="下一个" HorizontalAlignment="Left" Margin="164,12,0,0" VerticalAlignment="Top" Width="75" Click="btnQueryNext_Click"/>
+                        <Button x:Name="btnHandAdd" Content="手工添加" HorizontalAlignment="Left" Margin="260,12,0,0" VerticalAlignment="Top" Width="75" Click="btnHandAdd_Click"/>
+                        <TextBox x:Name="txtHandAddSubAccount" TextWrapping="Wrap" Text="ID:等级" Margin="340,13,12,409"/>
                     </Grid>
 
                 </Grid>
