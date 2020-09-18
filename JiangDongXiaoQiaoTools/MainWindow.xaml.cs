@@ -244,6 +244,7 @@ namespace JiangDongXiaoQiaoTools
             if (MessageBox.Show("请确认是否保存", "警告", MessageBoxButton.YesNo) == MessageBoxResult.Yes) {
                 var query = from SubUser item in lbMineAccounts.Items
                             where item.IsSelected == true
+                            orderby item.l
                             select new
                             {
                                 u = item.u,
@@ -362,12 +363,12 @@ namespace JiangDongXiaoQiaoTools
                 MessageBox.Show("等级跟id输入的不对请重新输入，中间的冒号必须是英文的冒号，不能用中文");
                 return;
             }
-            int testInt = 0;
-            if (!int.TryParse(accsplit[0], out testInt)) {
+            long testInt = 0;
+            if (!long.TryParse(accsplit[0], out testInt)) {
                 MessageBox.Show("ID必须为数字!");
                 return;
             }
-            if(!int.TryParse(accsplit[1],out testInt)){
+            if(!long.TryParse(accsplit[1],out testInt)){
                 MessageBox.Show("等级必须为数字!");
                 return;
             }
