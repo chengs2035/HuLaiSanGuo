@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,7 @@ namespace JiangDongXiaoQiaoTools.Bean
     public class TUser
     {
         public string server { get; set; }
+        
         public string roleId { get; set; }
         public string deviceId { get; set; }
         public string authorCode { get; set; }
@@ -21,11 +23,12 @@ namespace JiangDongXiaoQiaoTools.Bean
         public string serverId { get; set; }
         public string name { get; set; }
 
+        [JsonIgnore]
         public string UserName
         {
             get
             {
-                return string.Format("{0}:{1}:{2}",name, serverId, platform);
+                return string.Format("{0}:{1}:{2}", name, serverId, platform);
             }
         }
     }

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:JiangDongXiaoQiaoTools"
         xmlns:Properties="clr-namespace:JiangDongXiaoQiaoTools.Properties" x:Class="JiangDongXiaoQiaoTools.MainWindow"
         mc:Ignorable="d"
-        Title="让江东小乔更好用助手 V1 www.djc8.cn" Height="520" MinHeight="520"  Width="600.667"  MinWidth="528"  >
+        Title="让江东小乔更好用助手 V1 www.djc8.cn" Height="580" MinHeight="520"  Width="604.667"  MinWidth="528"  >
     <Grid RenderTransformOrigin="0.5,0.5">
         <StackPanel Panel.ZIndex="1">
             <Grid Width="Auto" Height="Auto" Margin="1">
@@ -15,7 +15,7 @@
                     <RowDefinition Height="25"/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
-                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="操作前先备份小乔的目录！程序会做一次自动备份的操作。" VerticalAlignment="Top" FontSize="16" Foreground="Red" />
+                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="操作前先备份小乔的目录！程序会做一次自动备份的操作。" VerticalAlignment="Top" FontSize="16" Foreground="Red" Margin="65,0,0,0" />
                 </Grid>
 
                 <Grid Grid.Row="1">
@@ -31,7 +31,7 @@
                     </Grid>
                 </Grid>
             </Grid>
-            <GroupBox x:Name="gbMain" Header="" HorizontalAlignment="Left" Height="432"   Margin="1,1,0,1" VerticalAlignment="Top" Width="582" RenderTransformOrigin="0.5,0.5" >
+            <GroupBox x:Name="gbMain" Header="" HorizontalAlignment="Left" Height="485"   Margin="1,1,0,1" VerticalAlignment="Top" Width="582" RenderTransformOrigin="0.5,0.5" >
                 <Grid Width="Auto" Height="Auto" Margin="0,-7,0,0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="25" />
@@ -56,16 +56,19 @@
                     </Grid>
 
                     <Grid Grid.Row="1">
-                        <ListBox x:Name="lbMineAccounts" Height="382" Width="239" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <ListBox x:Name="lbMineAccounts" Height="396" Width="239" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,39,0,0">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <CheckBox Margin="5"   Tag="{Binding u}" Content="{Binding ul}" IsChecked="{Binding IsSelected}"></CheckBox>
+                                    <CheckBox Margin="5"   Tag="{Binding u}" Content="{Binding ul}" IsChecked="{Binding IsSelected}"/>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
-                        <TextBlock HorizontalAlignment="Left" Margin="262,76,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="306" Width="298" Foreground="Black" FontSize="14"><Run Text="作用：可以提取取小乔里面的【矿号】，通过配置，可以由你控制用户库包含哪些用户。"/><LineBreak/><Run Text="1.【选择小乔文件夹的路径】，选中小乔的目录。"/><LineBreak/><Run Text="2.之后会自动解锁主公的下拉框"/><LineBreak/><Run Text="3.选择主公后，就会加载出矿号了。"/><LineBreak/><Run Text="4.通过快速选择复选框，可以自动选中对应范围的矿号。目前支持的选项为：1-30，31-40，41-50，50以上。"/><LineBreak/><Run Text="5.左侧矿号列表也可以直接点击，选中取消等操作。"/><LineBreak/><Run Text="6.都每次操作结束后，点击保存按钮，就会自动保存。请选择一个主公，就保存一次！。"/><LineBreak/><Run Text="7.孙尚香最美，不接受反驳"/></TextBlock>
+                        <TextBlock HorizontalAlignment="Left" Margin="262,76,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="286" Width="298" Foreground="Black" FontSize="14"><Run Text="作用：可以提取取小乔里面的【矿号】，通过配置，可以由你控制用户库包含哪些用户。"/><LineBreak/><Run Text="1.【选择小乔文件夹的路径】，选中小乔的目录。"/><LineBreak/><Run Text="2.之后会自动解锁主公的下拉框"/><LineBreak/><Run Text="3.选择主公后，就会加载出矿号了。"/><LineBreak/><Run Text="4.通过快速选择复选框，可以自动选中对应范围的矿号。目前支持的选项为：1-30，31-40，41-50，50以上。"/><LineBreak/><Run Text="5.左侧矿号列表也可以直接点击，选中取消等操作。"/><LineBreak/><Run Text="6.都每次操作结束后，点击保存按钮，就会自动保存。请选择一个主公，就保存一次！。"/><LineBreak/><Run Text="7.孙尚香最美，不接受反驳"/><LineBreak/><Run Text="8.黑科技不稳定，不要用哦"/></TextBlock>
                         <Button x:Name="btnSave" Content="保存" HorizontalAlignment="Left" Height="59" Margin="260,12,0,0" VerticalAlignment="Top" Width="300" Click="btnSave_Click"/>
-
+                        <Button Content="黑科技" HorizontalAlignment="Left" Margin="262,367,0,0" VerticalAlignment="Top" Width="92" Height="27" Click="Button_Click"/>
+                        <TextBox x:Name="txtAuthCode" Margin="359,368,10,50" Height="27"/>
+                        <TextBox x:Name="txtSearch" HorizontalAlignment="Left" Height="20" Margin="8,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="151"/>
+                        <Button x:Name="btnQueryNext" Content="下一个" HorizontalAlignment="Left" Margin="164,12,0,0" VerticalAlignment="Top" Width="75" Click="btnQueryNext_Click"/>
                     </Grid>
 
                 </Grid>
@@ -78,7 +81,7 @@
 
         <StackPanel Margin="0,0,0,0">
             <Image Source="favicon128128.ico" Opacity="0.3" Panel.ZIndex="-1" />
-            
+
         </StackPanel>
 
     </Grid>

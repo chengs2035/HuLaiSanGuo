@@ -36,7 +36,6 @@ namespace JiangDongXiaoQiaoTools
             gbMain.IsEnabled = false;
             opDB = new OperDB();
         }
-        private string xqDb = "";
 
         private OperDB opDB = null;
 
@@ -194,9 +193,9 @@ namespace JiangDongXiaoQiaoTools
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             if (lbMineAccounts==null || lbMineAccounts.Items == null || lbMineAccounts.Items.Count == 0) return;
+            
             CheckBox cbx = (CheckBox)sender;
             string tag = cbx.Tag.ToString();
-            //CheckBox checkbox = (CheckBox)control;
             
             var query = from SubUser item in lbMineAccounts.Items
                         select item;
@@ -244,7 +243,7 @@ namespace JiangDongXiaoQiaoTools
         {
             if (MessageBox.Show("请确认是否保存", "警告", MessageBoxButton.YesNo) == MessageBoxResult.Yes) {
                 var query = from SubUser item in lbMineAccounts.Items
-                            where item.l > 1 && item.l < 31 && item.IsSelected == true
+                            where item.IsSelected == true
                             select new
                             {
                                 u = item.u,
@@ -270,6 +269,81 @@ namespace JiangDongXiaoQiaoTools
 
                 }
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtAuthCode.Text))
+            {
+                MessageBox.Show("请输入黑科技密码");
+            }else   if (MessageBox.Show("请确认是否保存", "警告", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                string zUsersStr = opDB.getDBItemValue("zUsers");
+                List<TUser> tusers = JsonConvert.DeserializeObject<List<TUser>>(zUsersStr);
+
+                TUser tuser = (TUser)cbxUser.SelectedItem;
+                foreach (TUser tempUser in tusers) {
+                    if (tuser.roleId.Equals(tempUser.roleId)) {
+                        //黑科技修改
+                        tempUser.authorCode = txtAuthCode.Text;
+                        break;
+                    }
+                }
+                string json = JsonConvert.SerializeObject(tusers);
+                //opDB.updateItemTable("zUsers", json);
+                MessageBox.Show("黑科技注入成功");
+                    
+            }
+        }
+
+        private void btnQueryNext_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtSearch.Text))
+            {
+                MessageBox.Show("必须输入要搜索的关键字");
+                return;
+            }
+            if (lbMineAccounts == null || lbMineAccounts.Items == null || lbMineAccounts.Items.Count == 0) return;
+
+            var query = from SubUser item in lbMineAccounts.Items
+                        where item.u.Contains(txtSearch.Text)
+                        select item;
+            if (query.Count() == 0)
+            {
+                MessageBox.Show("啥都没找到");
+                return;
+            }
+            SubUser setCurrentItem = null;
+            //判断当前选中的位置，根查询出来的来查找，这样能够报证下一个会正确
+            if (lbMineAccounts.SelectedItem == null)
+            {
+                setCurrentItem = query.First();
+                //lbMineAccounts.SelectedItem = setCurrentItem;
+            }
+            else {
+                SubUser suser = (SubUser)lbMineAccounts.SelectedItem;
+                List<SubUser> list = query.ToList();
+                for (int i = 0, l = list.Count(); i < l; i++)
+                {
+                    SubUser tempUser = list[i];
+                    //找到了
+                    if (suser.u.Equals(tempUser.u))
+                    {
+                        //i后一个元素获取到。
+                        if (i+1 < l)
+                        {
+                            tempUser = list[i + 1];
+                            setCurrentItem = tempUser;
+                            //lbMineAccounts.SelectedItem = tempUser;
+                        }
+                    }
+                }
+            }
+
+            lbMineAccounts.SelectedItem = setCurrentItem;
+            lbMineAccounts.ScrollIntoView(setCurrentItem);
+
+
         }
     }
 }
