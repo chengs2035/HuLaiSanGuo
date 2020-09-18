@@ -3,6 +3,13 @@ Game is EASY!
 ###
 Recommend you to use Windows 10
 
+### App Screenshot
+
+![pic](https://raw.githubusercontent.com/chengs2035/HuLaiSanGuo/master/Pic/Screenshot1.png)
+
+![pic](https://raw.githubusercontent.com/chengs2035/HuLaiSanGuo/master/Pic/Screenshot2.png)
+
+![pic](https://raw.githubusercontent.com/chengs2035/HuLaiSanGuo/master/Pic/Screenshot3.png)
 
 ### RunTime Error
 
@@ -19,3 +26,4 @@ If Windows 7,Windows 8 running prompt
 ![pic2](https://raw.githubusercontent.com/chengs2035/HuLaiSanGuo/master/Pic/2.png)
 
 PLZ，Click Yes , The browser will open, you can click download to download
+
